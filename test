@@ -1,5 +1,9 @@
 Tekstas ab = 5 
 spausdinti(5)
-ab = ab / 5
+ab = ab + 2
 spausdinti(ab)
 jei (ab == "b") spausdinti("taip") : spausdinti("ne")
+kol (ab < 10) {
+  spausdinti(ab)
+  ab = ab + 1
+}

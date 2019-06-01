@@ -10,7 +10,6 @@ const {
   Condition,
   ArithmeticOperation,
   VariableUpdate,
-  VariableDeclaration,
   VariableInitialization
 } = require('./ast');
 
@@ -41,8 +40,9 @@ const semantics = {
     new Comparison('notLess', exp1.toAST(), exp2.toAST()),
   ConditionArguments_notGreater: (exp1, _, exp2) =>
     new Comparison('notGreater', exp1.toAST(), exp2.toAST()),
-  LoopDeclaration: (_, _1, args, _2, block) =>
-    new Loop(args.toAST(), block.toAST()),
+  LoopDeclaration: (_, _1, args, _2, block) => {
+    return new Loop(args.toAST(), block.toAST());
+  },
   ConditionDeclaration: (_, _1, args, _2, exp1, _3, exp2) =>
     new Condition(args.toAST(), exp1.toAST(), exp2.toAST()),
   Expression_plus: (arg1, _, arg2) =>

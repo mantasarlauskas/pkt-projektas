@@ -48,7 +48,11 @@ class Print {
   }
 
   resolve(scope) {
-    console.log(this.value.resolve(scope).value);
+    if (this.value.name) {
+      console.log(scope.getSymbol(this.value.name));
+    } else {
+      console.log(this.value.resolve(scope).value);
+    }
     return null;
   }
 }
@@ -105,8 +109,22 @@ class Comparison {
   }
 
   resolve(scope) {
-    const value1 = this.arg1.resolve(scope).value;
-    const value2 = this.arg2.resolve(scope).value;
+    let value1, value2;
+    if (this.arg1.name) {
+      value1 = scope.getSymbol(this.arg1.name);
+    } else {
+      value1 = this.arg1.resolve(scope).value;
+    }
+    if (this.arg2.name) {
+      value2 = scope.getSymbol(this.arg2.name);
+    } else {
+      value2 = this.arg2.resolve(scope).value;
+    }
+
+    if (parseFloat(value1) && parseFloat(value2)) {
+      value1 = parseFloat(value1);
+      value2 = parseFloat(value2);
+    }
 
     if (this.operation == 'notEqual') return new Value(value1 != value1);
     if (this.operation == 'equal') return new Value(value1 == value2);
@@ -125,13 +143,23 @@ class ArithmeticOperation {
   }
 
   resolve(scope) {
-    let value1 = this.arg1.resolve(scope).value;
-    let value2 = this.arg2.resolve(scope).value;
+    let value1, value2;
+    if (this.arg1.name) {
+      value1 = scope.getSymbol(this.arg1.name);
+    } else {
+      value1 = this.arg1.resolve(scope).value;
+    }
+    if (this.arg2.name) {
+      value2 = scope.getSymbol(this.arg2.name);
+    } else {
+      value2 = this.arg2.resolve(scope).value;
+    }
 
     if (parseFloat(value1) && parseFloat(value2)) {
       value1 = parseFloat(value1);
       value2 = parseFloat(value2);
-      if (this.operation == '+') return new Value(value1 + value1);
+
+      if (this.operation == '+') return new Value(value1 + value2);
       if (this.operation == '-') return new Value(value1 - value2);
       if (this.operation == '/') return new Value(value1 / value2);
       if (this.operation == '*') return new Value(value1 * value2);
@@ -185,7 +213,7 @@ class VariableUpdate {
 
   resolve(scope) {
     if (scope.getSymbol(this.variable.name)) {
-      return scope.setSymbol(this.variable, this.value.resolve(scope));
+      return scope.setSymbol(this.variable, this.value.resolve(scope).value);
     } else {
       return null;
     }
@@ -200,7 +228,7 @@ class VariableInitialization {
 
   resolve(scope) {
     if (!scope.getSymbol(this.variable.name)) {
-      return scope.setSymbol(this.variable, this.value.resolve(scope));
+      return scope.setSymbol(this.variable, this.value.resolve(scope).value);
     } else {
       return null;
     }
