@@ -1,2 +1,5 @@
-Tekstas ab = "a"
+Tekstas ab = 5 
 spausdinti(5)
+ab = ab / 5
+spausdinti(ab)
+jei (ab == "b") spausdinti("taip") : spausdinti("ne")

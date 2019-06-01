@@ -125,13 +125,18 @@ class ArithmeticOperation {
   }
 
   resolve(scope) {
-    const value1 = this.arg1.resolve(scope).value;
-    const value2 = this.arg2.resolve(scope).value;
+    let value1 = this.arg1.resolve(scope).value;
+    let value2 = this.arg2.resolve(scope).value;
 
-    if (this.operation == '+') return new Value(value1 + value1);
-    if (this.operation == '-') return new Value(value1 - value2);
-    if (this.operation == '/') return new Value(value1 / value2);
-    if (this.operation == '*') return new Value(value1 * value2);
+    if (parseFloat(value1) && parseFloat(value2)) {
+      value1 = parseFloat(value1);
+      value2 = parseFloat(value2);
+      if (this.operation == '+') return new Value(value1 + value1);
+      if (this.operation == '-') return new Value(value1 - value2);
+      if (this.operation == '/') return new Value(value1 / value2);
+      if (this.operation == '*') return new Value(value1 * value2);
+    }
+    return new Value(null);
   }
 }
 

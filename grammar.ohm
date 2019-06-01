@@ -14,7 +14,7 @@ Projektas {
                 | Name
                 | Term
 
-    ConditionDeclaration = "jei" "(" ConditionArguments ")" Expression ":" Expression
+    ConditionDeclaration = "jei" "(" ConditionArguments ")" Line ":" Line
 
     LoopDeclaration = "kol" "(" ConditionArguments ")" Block
 
