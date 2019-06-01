@@ -1,13 +1,11 @@
 Projektas {
     Lines = Line+
 
-    Line = VariableInitialization | VariableDeclaration | VariableUpdate | Print | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression 
+    Line = VariableInitialization | VariableUpdate | Print | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression 
 
     VariableInitialization = DataTypes Name "=" Expression 
 
     VariableUpdate = Name "=" Expression
-    
-    VariableDeclaration = DataTypes Name
 
     Expression  = Expression "+" Expression -- plus
                 | Expression "-" Expression -- minus
@@ -35,7 +33,8 @@ Projektas {
 
     Block = "{" Line* "}"
     
-    Print = "spausdinti" "(" Term ")"
+    Print   = "spausdinti" "(" Term ")"
+            | "spausdinti" "(" Name ")"
     
     DataTypes = "Skaicius" | "Tekstas"
 

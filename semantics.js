@@ -53,11 +53,12 @@ const semantics = {
     new ArithmeticOperation('*', arg1.toAST(), arg2.toAST()),
   Expression_div: (arg1, _, arg2) =>
     new ArithmeticOperation('/', arg1.toAST(), arg2.toAST()),
-  VariableUpdate: (name, _, exp) =>
-    new VariableUpdate(name.toAST(), exp.toAST()),
-  VariableInitialization: (_, name, _1, exp) =>
-    new VariableInitialization(name.toAST(), exp.toAST()),
-  VariableDeclaration: (_, name) => new VariableDeclaration(name.toAST())
+  VariableUpdate: (name, _, exp) => {
+    return new VariableUpdate(name.toAST(), exp.toAST());
+  },
+  VariableInitialization: (_, name, _1, exp) => {
+    return new VariableInitialization(name.toAST(), exp.toAST());
+  }
 };
 
 module.exports = {

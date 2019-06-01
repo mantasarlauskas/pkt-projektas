@@ -26,7 +26,6 @@ class Scope {
 
   setSymbol(sym, obj) {
     this.symbolTable[sym.name] = obj;
-    console.log(obj);
     return this.symbolTable[sym.name];
   }
 
@@ -180,22 +179,8 @@ class VariableUpdate {
   }
 
   resolve(scope) {
-    if (scope.getSymbol(variable.name)) {
+    if (scope.getSymbol(this.variable.name)) {
       return scope.setSymbol(this.variable, this.value.resolve(scope));
-    } else {
-      return null;
-    }
-  }
-}
-
-class VariableDeclaration {
-  constructor(variable) {
-    this.variable = variable;
-  }
-
-  resolve(scope) {
-    if (!scope.getSymbol(variable.name)) {
-      return scope.setSymbol(this.variable, null);
     } else {
       return null;
     }
@@ -209,7 +194,7 @@ class VariableInitialization {
   }
 
   resolve(scope) {
-    if (!scope.getSymbol(variable.name)) {
+    if (!scope.getSymbol(this.variable.name)) {
       return scope.setSymbol(this.variable, this.value.resolve(scope));
     } else {
       return null;
@@ -230,6 +215,5 @@ module.exports = {
   Block,
   ArithmeticOperation,
   VariableUpdate,
-  VariableDeclaration,
   VariableInitialization
 };
