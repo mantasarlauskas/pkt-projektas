@@ -201,6 +201,21 @@ class VariableDeclaration {
   }
 }
 
+class VariableInitialization {
+  constructor(variable, value) {
+    this.variable = variable;
+    this.value = value;
+  }
+
+  resolve(scope) {
+    if (!scope.getSymbol(variable.name)) {
+      return scope.setSymbol(this.variable, this.value.resolve(scope));
+    } else {
+      return null;
+    }
+  }
+}
+
 module.exports = {
   Value,
   SymbolTable,
@@ -214,5 +229,6 @@ module.exports = {
   Block,
   ArithmeticOperation,
   VariableUpdate,
-  VariableDeclaration
+  VariableDeclaration,
+  VariableInitialization
 };

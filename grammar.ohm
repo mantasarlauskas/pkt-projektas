@@ -1,20 +1,20 @@
 Projektas {
-
     Code = Line+
+    Line = VariableInitialization | VariableDeclaration | VariableUpdate | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression | Print
 
-    Line = VariableDeclaration | VariableUpdate | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression | Print
-
-    VariableDeclaration = DataTypes Name -- declare
-                        | DataTypes Name "=" Expression -- initialize
+    VariableInitialization = DataTypes Name "=" Expression 
 
     VariableUpdate = Name "=" Expression
+    
+    VariableDeclaration = DataTypes Name
 
-    Expression  = Name 
-                | Term 
-                | Expression "+" Expression -- plus
+
+    Expression  = Expression "+" Expression -- plus
                 | Expression "-" Expression -- minus
                 | Expression "*" Expression -- mul
                 | Expression "/" Expression -- div
+                | Name
+                | Term
 
     ConditionDeclaration = "jei" "(" ConditionArguments ")" Expression ":" Expression
 
@@ -33,9 +33,9 @@ Projektas {
 
     FunctionArguments = ListOf<Name, ",">
 
-    Block = "{" Expression* "}"
+    Block = "{" Line* "}"
     
-    Print = "spausdinti" "(" Name ")" | "spausdinti" "(" Term ")"
+    Print = "spausdinti" "(" Term ")"
     
     DataTypes = "Skaicius" | "Tekstas"
 
@@ -47,7 +47,6 @@ Projektas {
 
     Quotes = "\'" | "\""
 
-    space := "\t" | " " | "\n" | "\r\n" | comment
-
+    space := "\t" | " " | "\n" | comment
     comment = "//" (~"\n" any)*
 }

@@ -15,6 +15,9 @@ const {
 
 const semantics = {
   String: (_, text, _1) => new Value(text.sourceString),
+  Term: function(_) {
+    return new SymbolTable(this.sourceString);
+  },
   Name: function(_, _1) {
     return new SymbolTable(this.sourceString);
   },
@@ -51,10 +54,9 @@ const semantics = {
     new ArithmeticOperation('/', arg1.toAST(), arg2.toAST()),
   VariableUpdate: (name, _, exp) =>
     new VariableUpdate(name.toAST(), exp.toAST()),
-  VariableDeclaration_declare: (_, name) =>
-    new VariableDeclaration(name.toAST()),
-  VariableDeclaration_initialize: (_, name, _1, exp) =>
-    new VariableInitialization(name.toAST(), exp.toAST())
+  VariableInitialization: (_, name, _1, exp) =>
+    new VariableInitialization(name.toAST(), exp.toAST()),
+  VariableDeclaration: (_, name) => new VariableDeclaration(name.toAST())
 };
 
 module.exports = {
