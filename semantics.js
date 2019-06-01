@@ -60,6 +60,5 @@ const semantics = {
 };
 
 module.exports = {
-  getSemantics: grammar =>
-    grammar.createSemantics().addOperation('toAST', semantics)
+  returnSemantics: grammar => grammar.addOperation('toAST', semantics)
 };

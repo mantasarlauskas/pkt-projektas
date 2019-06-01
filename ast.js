@@ -1,9 +1,9 @@
 class Value {
-  constructor(val) {
-    this.val = val;
+  constructor(value) {
+    this.value = value;
   }
 
-  resolve() {
+  resolve(scope) {
     return this;
   }
 }
@@ -55,25 +55,25 @@ class Print {
 
 class Block {
   constructor(block) {
-    this.statements = block;
+    this.block = block;
   }
 
   resolve(scope) {
-    const values = this.statements.map(expr => expr.resolve(scope));
+    const values = this.block.map(expr => expr.resolve(scope));
     return values.pop();
   }
 }
 
 class FunctionCall {
-  constructor(name, args) {
-    this.fun = name;
+  constructor(func, args) {
+    this.func = func;
     this.args = args;
   }
 
   resolve(scope) {
-    let fun = scope.getSymbol(this.fun.name);
+    let func = scope.getSymbol(this.func.name);
     const args = this.args.map(arg => arg.resolve(scope));
-    return fun.apply(null, args);
+    return func.apply(null, args);
   }
 }
 
@@ -105,8 +105,8 @@ class Comparison {
   }
 
   resolve(scope) {
-    const value1 = this.arg1.resolve(scope).val;
-    const value2 = this.arg2.resolve(scope).val;
+    const value1 = this.arg1.resolve(scope).value;
+    const value2 = this.arg2.resolve(scope).value;
 
     if (this.operation == 'notEqual') return new Value(value1 != value1);
     if (this.operation == 'equal') return new Value(value1 == value2);
@@ -125,8 +125,8 @@ class ArithmeticOperation {
   }
 
   resolve(scope) {
-    const value1 = this.arg1.resolve(scope).val;
-    const value2 = this.arg2.resolve(scope).val;
+    const value1 = this.arg1.resolve(scope).value;
+    const value2 = this.arg2.resolve(scope).value;
 
     if (this.operation == '+') return new Value(value1 + value1);
     if (this.operation == '-') return new Value(value1 - value2);
@@ -163,7 +163,7 @@ class Condition {
   resolve(scope) {
     const conditionResult = this.condition.resolve(scope);
     let result = new Value(false);
-    if (conditionResult.val == true) {
+    if (conditionResult.value == true) {
       result = this.exp1.resolve(scope);
     } else {
       result = this.exp2.resolve(scope);
