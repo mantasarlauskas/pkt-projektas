@@ -1,9 +1,23 @@
 Tekstas ab = 5 
-spausdinti(5)
+spausdinti(ab)
 ab = ab + 2
 spausdinti(ab)
 jei (ab == "b") spausdinti("taip") : spausdinti("ne")
+spausdinti("ciklas kol")
 kol (ab < 10) {
+  Skaicius b = 2
   spausdinti(ab)
   ab = ab + 1
 }
+
+spausdinti("funkcija")
+funkcija print(a, d) {
+  spausdinti(a)
+  Skaicius z = d + 20
+  spausdinti(d)
+  spausdinti(z)
+}
+
+Skaicius d = 80
+
+print(ab, d)

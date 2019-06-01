@@ -91,11 +91,11 @@ class FunctionDeclaration {
   resolve(scope) {
     let body = this.body;
     let params = this.params;
-    return scope.setSymbol(new SymbolTable(this.func.name), () => {
+    return scope.setSymbol(new SymbolTable(this.func.name), function() {
       let childScope = scope.createChildScope();
-      params.forEach((param, i) =>
-        childScope.setSymbol(new SymbolTable(param.name), arguments[i])
-      );
+      params.forEach((param, i) => {
+        childScope.setSymbol(new SymbolTable(param.name), arguments[i]);
+      });
       return body.resolve(childScope);
     });
   }

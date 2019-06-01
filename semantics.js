@@ -26,8 +26,9 @@ const semantics = {
   FunctionArguments: args => args.asIteration().toAST(),
   FunctionCall: (name, _, args, _1) =>
     new FunctionCall(name.toAST(), args.toAST()),
-  FunctionDeclaration: (_, name, _1, args, _2, block) =>
-    new FunctionDeclaration(name.toAST(), args.toAST(), block.toAST()),
+  FunctionDeclaration: (_, name, _1, args, _2, block) => {
+    return new FunctionDeclaration(name.toAST(), args.toAST(), block.toAST());
+  },
   ConditionArguments_notEqual: (exp1, _, exp2) =>
     new Comparison('notEqual', exp1.toAST(), exp2.toAST()),
   ConditionArguments_equal: (exp1, _, exp2) =>

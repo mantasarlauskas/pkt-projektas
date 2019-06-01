@@ -29,7 +29,7 @@ Projektas {
 
     FunctionCall = Name "(" FunctionArguments ")"
 
-    FunctionArguments = ListOf<Name, ",">
+    FunctionArguments = ListOf<Name, ","> | ListOf<Name, ",">
 
     Block = "{" Line* "}"
     
