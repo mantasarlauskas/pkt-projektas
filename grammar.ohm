@@ -1,7 +1,7 @@
 Projektas {
     Lines = Line+
 
-    Line = VariableInitialization | VariableDeclaration | VariableUpdate | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression | Print
+    Line = VariableInitialization | VariableDeclaration | VariableUpdate | Print | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression 
 
     VariableInitialization = DataTypes Name "=" Expression 
 

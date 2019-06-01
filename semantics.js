@@ -2,6 +2,7 @@ const {
   Value,
   SymbolTable,
   Block,
+  Print,
   FunctionCall,
   FunctionDeclaration,
   Comparison,
@@ -14,14 +15,14 @@ const {
 } = require('./ast');
 
 const semantics = {
-  String: (_, text, _1) => new Value(text.sourceString),
+  Lines: block => new Block(block.toAST()),
   Term: function(_) {
-    return new SymbolTable(this.sourceString);
+    return new Value(this.sourceString.replace(/['"]+/g, ''));
   },
   Name: function(_, _1) {
     return new SymbolTable(this.sourceString);
   },
-  Print: (_, _1, value, _2) => new Print(value.sourceString),
+  Print: (_, _1, value, _2) => new Print(value.toAST()),
   Block: (_, body, _1) => new Block(body.toAST()),
   FunctionArguments: args => args.asIteration().toAST(),
   FunctionCall: (name, _, args, _1) =>

@@ -1,5 +1,1 @@
-Skaicius a = 5
-Tekstas b = "abc"
-kol (a < 20) {
-  a = a + 1
-}
+spausdinti(5)

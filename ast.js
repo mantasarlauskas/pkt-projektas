@@ -26,6 +26,7 @@ class Scope {
 
   setSymbol(sym, obj) {
     this.symbolTable[sym.name] = obj;
+    console.log(obj);
     return this.symbolTable[sym.name];
   }
 
@@ -48,7 +49,7 @@ class Print {
   }
 
   resolve(scope) {
-    console.log(this.value.resolve(scope).val);
+    console.log(this.value.resolve(scope).value);
     return null;
   }
 }
