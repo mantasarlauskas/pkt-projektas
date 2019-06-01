@@ -1,0 +1,53 @@
+Projektas {
+
+    Code = Line+
+
+    Line = VariableDeclaration | VariableUpdate | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression | Print
+
+    VariableDeclaration = DataTypes Name -- declare
+                        | DataTypes Name "=" Expression -- initialize
+
+    VariableUpdate = Name "=" Expression
+
+    Expression  = Name 
+                | Term 
+                | Expression "+" Expression -- plus
+                | Expression "-" Expression -- minus
+                | Expression "*" Expression -- mul
+                | Expression "/" Expression -- div
+
+    ConditionDeclaration = "jei" "(" ConditionArguments ")" Expression ":" Expression
+
+    LoopDeclaration = "kol" "(" ConditionArguments ")" Block
+
+    ConditionArguments  = Expression "==" Expression -- equal
+                        | Expression "!=" Expression  -- notEqual
+                        | Expression ">" Expression  -- greater
+                        | Expression "<" Expression  -- less
+                        | Expression ">=" Expression  -- notLess
+                        | Expression "<=" Expression  -- notGreater
+
+    FunctionDeclaration = "funkcija" Name "(" FunctionArguments ")" Block
+
+    FunctionCall = Name "(" FunctionArguments ")"
+
+    FunctionArguments = ListOf<Name, ",">
+
+    Block = "{" Expression* "}"
+    
+    Print = "spausdinti" "(" Name ")" | "spausdinti" "(" Term ")"
+    
+    DataTypes = "Skaicius" | "Tekstas"
+
+    Name = letter (letter|digit)*
+
+    Term = digit+ | String
+
+    String = Quotes (~Quotes any)+ Quotes
+
+    Quotes = "\'" | "\""
+
+    space := "\t" | " " | "\n" | "\r\n" | comment
+
+    comment = "//" (~"\n" any)*
+}
