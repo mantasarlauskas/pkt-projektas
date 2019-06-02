@@ -57,8 +57,9 @@ const semantics = {
   VariableUpdate: (name, _, exp) => {
     return new VariableUpdate(name.toAST(), exp.toAST());
   },
-  VariableInitialization: (_, name, _1, exp) => {
-    return new VariableInitialization(name.toAST(), exp.toAST());
+  VariableInitialization: function(_, name, _1, exp) {
+    const type = this.sourceString.split(' ')[0];
+    return new VariableInitialization(type, name.toAST(), exp.toAST());
   }
 };
 

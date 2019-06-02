@@ -49,6 +49,9 @@ class Print {
 
   resolve(scope) {
     if (this.value.name) {
+      if (!scope.getSymbol(this.value.name)) {
+        throw 'Kintamasis ' + this.value.name + ' nerastas!';
+      }
       console.log(scope.getSymbol(this.value.name));
     } else {
       console.log(this.value.resolve(scope).value);
@@ -212,26 +215,47 @@ class VariableUpdate {
   }
 
   resolve(scope) {
-    if (scope.getSymbol(this.variable.name)) {
+    const variable = scope.getSymbol(this.variable.name);
+    if (variable) {
+      const parsedValue = parseFloat(this.value.resolve(scope).value);
+      if (typeof variable === 'number' && !parsedValue) {
+        throw 'Priskirta netinkama reiksme "Skaicius" tipo kintamajam ' +
+          this.variable.name +
+          '!';
+      } else if (typeof variable === 'string' && parsedValue) {
+        throw 'Priskirta netinkama reiksme "Tekstas" tipo kintamajam ' +
+          this.variable.name +
+          '!';
+      }
+
       return scope.setSymbol(this.variable, this.value.resolve(scope).value);
     } else {
-      return null;
+      throw 'Kintamasis ' + this.variable.name + ' nerastas';
     }
   }
 }
 
 class VariableInitialization {
-  constructor(variable, value) {
+  constructor(type, variable, value) {
+    this.type = type;
     this.variable = variable;
     this.value = value;
   }
 
   resolve(scope) {
-    if (!scope.getSymbol(this.variable.name)) {
-      return scope.setSymbol(this.variable, this.value.resolve(scope).value);
-    } else {
-      return null;
+    const parsedValue = parseFloat(this.value.resolve(scope).value);
+    if (this.type === 'Skaicius' && !parsedValue) {
+      throw 'Priskirta netinkama reiksme "Skaicius" tipo kintamajam ' +
+        this.variable.name +
+        '!';
+    } else if (this.type === 'Tekstas' && parsedValue) {
+      throw 'Priskirta netinkama reiksme "Tekstas" tipo kintamajam ' +
+        this.variable.name +
+        '!';
     }
+    return parsedValue
+      ? scope.setSymbol(this.variable, parsedValue)
+      : scope.setSymbol(this.variable, this.value.resolve(scope).value);
   }
 }
 
