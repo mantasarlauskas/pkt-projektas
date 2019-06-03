@@ -29,4 +29,8 @@ spausdinti(ab)
 
 Skaicius sk = 90056
 Skaicius sk1 = sk[3:5]
+
+Tekstas txt = 'tekstukas'
+Tekstas txt1 = txt[3:8]
 spausdinti(sk1)
+spausdinti(txt1)

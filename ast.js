@@ -83,30 +83,37 @@ class Slice {
     const index1 = parseInt(this.index1.sourceString);
     const index2 = parseInt(this.index2.sourceString);
     if (variable && index1 && index2) {
-      var length = parseInt(Math.log10(variable))+1;
+      if (typeof variable === 'number') var length = parseInt(Math.log10(variable))+1;
+      else if (typeof variable === 'string') var length = variable.length;
+
       if (index2 > length || index1 > length) {
         throw 'Indeksas per didelis';
       } else if (index1 > index2) {
         throw 'pradžios indeksas negali būti didesnis už pabaigos indeksą';
       } else if (index1 < 1 || index2 < 1) {
         throw 'indeksas per mažas';
-      } else if (typeof variable === 'string') {
-        throw 'Slice komandos atlikti kintamajam ' +
-        this.variable.name +
-        'negalima!';
       }
-      var temp = 0;
-      for (var i = index2-1; i>=index1-1;i--)  {
-         temp *= 10;
 
-         var digit = parseInt(variable/Math.pow(10, i)) % 10;
-        // if(digit == 0 && i==index2-1)
+      if (typeof variable === 'number') {
+        var temp = 0;
+        for (var i = index2-1; i>=index1-1;i--)  {
+          temp *= 10;
+
+          var digit = parseInt(variable/Math.pow(10, i)) % 10;
+          // if(digit == 0 && i==index2-1)
           //   temp += 10;
-        // else
-           temp += digit;
-      }
+          // else
+          temp += digit;
+        }
 
-      return new Value(temp);
+        return new Value(temp);
+      }
+      else if (typeof variable === 'string') {
+        var str = variable
+        var res = str.substr(index1-1, index2-index1+1);
+
+        return new Value(res);
+      }
     } else {
       throw 'Patikrinkite kintamąjį ir indeksus';
     }
