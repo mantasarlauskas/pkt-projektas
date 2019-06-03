@@ -71,6 +71,49 @@ class Block {
   }
 }
 
+class Slice {
+  constructor(variable, index1, index2) {
+    this.variable = variable;
+    this.index1 = index1;
+    this.index2 = index2;
+  }
+
+  resolve(scope) {
+    const variable = scope.getSymbol(this.variable.name);
+    const index1 = parseInt(this.index1.sourceString);
+    const index2 = parseInt(this.index2.sourceString);
+    if (variable && index1 && index2) {
+      var length = parseInt(Math.log10(variable))+1;
+      if (index2 > length || index1 > length) {
+        throw 'Indeksas per didelis';
+      } else if (index1 > index2) {
+        throw 'pradžios indeksas negali būti didesnis už pabaigos indeksą';
+      } else if (index1 < 1 || index2 < 1) {
+        throw 'indeksas per mažas';
+      } else if (typeof variable === 'string') {
+        throw 'Slice komandos atlikti kintamajam ' +
+        this.variable.name +
+        'negalima!';
+      }
+      var temp = 0;
+      for (var i = index2-1; i>=index1-1;i--)  {
+         temp *= 10;
+
+         var digit = parseInt(variable/Math.pow(10, i)) % 10;
+        // if(digit == 0 && i==index2-1)
+          //   temp += 10;
+        // else
+           temp += digit;
+      }
+
+      return new Value(temp);
+    } else {
+      throw 'Patikrinkite kintamąjį ir indeksus';
+    }
+  }
+}
+
+
 class FunctionCall {
   constructor(func, args) {
     this.func = func;
@@ -264,6 +307,7 @@ module.exports = {
   SymbolTable,
   Scope,
   Print,
+  Slice,
   FunctionCall,
   FunctionDeclaration,
   Comparison,

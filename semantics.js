@@ -3,6 +3,7 @@ const {
   SymbolTable,
   Block,
   Print,
+  Slice,
   FunctionCall,
   FunctionDeclaration,
   Comparison,
@@ -21,6 +22,7 @@ const semantics = {
   Name: function(_, _1) {
     return new SymbolTable(this.sourceString);
   },
+  Slice: (name,_,digit1,_1,digit2,_2) => new Slice(name.toAST(), digit1, digit2),
   Print: (_, _1, value, _2) => new Print(value.toAST()),
   Block: (_, body, _1) => new Block(body.toAST()),
   FunctionArguments: args => args.asIteration().toAST(),

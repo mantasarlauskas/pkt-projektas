@@ -1,7 +1,9 @@
 Projektas {
     Lines = Line+
 
-    Line = VariableInitialization | VariableUpdate | Print | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall | Expression 
+    Line = VariableInitialization | VariableUpdate | Print | ConditionDeclaration | LoopDeclaration | FunctionDeclaration | FunctionCall
+
+    Slice = Name "[" digit+ ":" digit+ "]"
 
     VariableInitialization = DataTypes Name "=" Expression 
 
@@ -11,6 +13,7 @@ Projektas {
                 | Expression "-" Expression -- minus
                 | Expression "*" Expression -- mul
                 | Expression "/" Expression -- div
+                | Slice
                 | Name
                 | Term
 
@@ -46,6 +49,6 @@ Projektas {
 
     Quotes = "\'" | "\""
 
-    space := "\t" | " " | "\n" | comment
+    space := "\t" | " " | "\n" | comment | "\r\n"
     comment = "//" (~"\n" any)*
 }

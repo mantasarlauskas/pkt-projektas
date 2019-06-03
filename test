@@ -1,4 +1,4 @@
-Skaicius ab = 5 
+Skaicius ab = 5
 spausdinti(ab)
 ab = ab + 2
 spausdinti(ab)
@@ -19,12 +19,14 @@ funkcija print(a, d) {
 }
 
 Skaicius d = 80
-
-//print(ab, d)
-
+print(ab)
 Tekstas ab = "abcde"
-
 ab = "ab"
 
 spausdinti(ab)
-spausdinti(cbed)
+//spausdinti(cbed)
+
+
+Skaicius sk = 90056
+Skaicius sk1 = sk[3:5]
+spausdinti(sk1)
